@@ -1,0 +1,7 @@
+@url = http://localhost:5000/api
+
+POST {{url}}/users/auth
+Content-Type: application/json
+Authorization: none
+
+{}
