@@ -6,8 +6,6 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/database.js";
 import userRoutes from "./routes/userRoutes.js";
 
-import i18n from "./config/i18n.js";
-
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 connectDB();
@@ -18,7 +16,6 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-app.use(i18n.init);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

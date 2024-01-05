@@ -1,9 +1,0 @@
-{
-  "controller": {
-    "User": {
-      "InvalidEmailOrPassword": "Passwort oder Email ist inkorrekt"
-    }
-  },
-  "middlewares": {},
-  "routes": {}
-}
