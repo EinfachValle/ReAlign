@@ -58,6 +58,10 @@ User.pre("save", async function (next) {
   next();
 });
 
+User.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
 User.plugin(mongoosePaginate);
 const UserSchema = mongoose.model("User", User);
 

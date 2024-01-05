@@ -1,12 +1,25 @@
 import asyncHandler from "express-async-handler";
-
+import generateToken from "../utils/generateToken.js";
 import User from "../models/User.js";
 
 // @desc AUTH user/set token
 // route POST /api/users/auth
 // @access Public
 const authUser = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "Auth User" });
+  const { email, password, userName } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (user && (await user.matchPassword(password))) {
+    generateToken(res, user._id);
+    res.status(201).json({
+      _id: user._id,
+      userName: user.userName,
+      email: user.email,
+    });
+  } else {
+    res.status(400).json({ message: "Invalid EMail or password" });
+  }
 });
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -27,6 +40,7 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   if (user) {
+    generateToken(res, user._id);
     res.status(201).json({
       _id: user._id,
       userName: user.userName,
@@ -43,15 +57,45 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "Logout User" });
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    expires: new Date(0),
+  });
+
+  res.status(200).json({ message: "User logged out" });
 });
 
 const getUserProfile = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "get User profile" });
+  const user = {
+    _id: req.user._id,
+    name: req.user.name,
+    email: req.user.email,
+  };
+
+  res.status(200).json(user);
 });
 
 const updateUserProfile = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "Update User Profile" });
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+    });
+  } else {
+    res.status(404).json({ message: "User not found" });
+  }
 });
 
 export {
