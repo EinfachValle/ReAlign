@@ -1,1 +1,10 @@
-{}
+{
+	"controller": {
+		"User": {
+			"InvalidEmailOrPassword": "Invalid Email or Password"
+		}
+	},
+	"middlewares": {},
+	"routes": {},
+	"controller.User.InvalidEmailOrPassword": "controller.User.InvalidEmailOrPassword"
+}
