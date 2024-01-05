@@ -2,9 +2,6 @@ import asyncHandler from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
 import User from "../models/User.js";
 
-// @desc AUTH user/set token
-// route POST /api/users/auth
-// @access Public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password, userName } = req.body;
 
@@ -98,10 +95,27 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+const deleteUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  try {
+    await user.remove();
+    res.status(204).json({ message: "User successfully deleted" });
+  } catch (error) {
+    console.error(`User deletion failed: ${error}`);
+    res.status(500).json({ message: "User deletion failed" });
+  }
+});
+
 export {
   authUser,
   registerUser,
   logoutUser,
   getUserProfile,
   updateUserProfile,
+  deleteUserProfile,
 };
