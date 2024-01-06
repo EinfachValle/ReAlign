@@ -1,8 +1,10 @@
 import React, { Fragment, useEffect, Suspense } from "react";
-
 import { Route, Routes, useNavigate } from "react-router-dom";
+import PrivateRoutes from "PrivateRoutes";
 
-const Home = React.lazy(() => import("./views/home.js"));
+const ErrorLayout = React.lazy(() => import("./layouts/ErrorLayout"));
+const AuthLayout = React.lazy(() => import("./layouts/AuthLayout"));
+const AppLayout = React.lazy(() => import("./layouts/AppLayout"));
 
 const StorybookRoute = () => {
   const navigate = useNavigate();
@@ -30,7 +32,11 @@ const AppRoutes = (props) => {
       <Suspense fallback={<div>Laden...</div>}>
         <Routes>
           {isDev && <Route path="/storybook" element={<StorybookRoute />} />}
-          <Route path="/" element={<Home />} />
+          <Route path="/error" element={<ErrorLayout />} />
+          <Route path="/auth" element={<AuthLayout />} />
+          <Route path="/" element={<PrivateRoutes />}>
+            <Route path="/app" element={<AppLayout />} />
+          </Route>
         </Routes>
       </Suspense>
     </Fragment>
