@@ -47,6 +47,9 @@ const useStyles = makeStyles({
     flexShrink: 0,
     borderRadius: "0px 12px 12px 0px",
     background: "#12141B",
+    "@media (max-width: 769px)": {
+      borderRadius: "12px",
+    },
   },
   gradientOverlay: {
     background:
