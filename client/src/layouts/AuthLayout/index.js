@@ -1,7 +1,9 @@
 import React, { Suspense, memo } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography } from "@mui/material";
+import Login from "components/auth/login";
+import Register from "components/auth/register";
 
 const useStyles = makeStyles({
   root: {
@@ -14,14 +16,15 @@ const useStyles = makeStyles({
 
 function AuthLayout() {
   const classes = useStyles();
+  let location = useLocation();
 
   return (
     <Box className={classes.root}>
       <Typography variant="h1">AuthLayout</Typography>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route path="/auth/login" element={<div>login</div>} />
-          <Route path="/auth/register" element={<div>register</div>} />
+      <Suspense fallback={<Box>Loading...</Box>}>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register/*" element={<Register />} />
         </Routes>
       </Suspense>
     </Box>

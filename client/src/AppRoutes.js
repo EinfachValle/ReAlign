@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, Suspense } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import PrivateRoutes from "PrivateRoutes";
 
 const ErrorLayout = React.lazy(() => import("./layouts/ErrorLayout"));
@@ -32,11 +32,18 @@ const AppRoutes = (props) => {
       <Suspense fallback={<div>Laden...</div>}>
         <Routes>
           {isDev && <Route path="/storybook" element={<StorybookRoute />} />}
-          <Route path="/error" element={<ErrorLayout />} />
-          <Route path="/auth" element={<AuthLayout />} />
-          <Route path="/" element={<PrivateRoutes />}>
-            <Route path="/app" element={<AppLayout />} />
-          </Route>
+
+          <Route path="/auth/*" element={<AuthLayout />} />
+          <Route path="/error/*" element={<ErrorLayout />} />
+          <Route
+            path="/app/*"
+            element={
+              <PrivateRoutes>
+                <AppLayout />
+              </PrivateRoutes>
+            }
+          />
+          <Route path="*" element={<Navigate to="/auth/login" replace />} />
         </Routes>
       </Suspense>
     </Fragment>
