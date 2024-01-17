@@ -4,8 +4,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, CircularProgress } from "@mui/material";
 import Login from "components/auth/login";
 import Register from "components/auth/register";
+import { useTranslation } from "react-i18next";
 
 // bg images:
+
+import ReAlignLogo from "../../assets/img/logo/ra-logo.png";
 
 import LoginBackground from "../../assets/img/background/Login.png";
 import Step1Background from "../../assets/img/background/Step1.png";
@@ -18,6 +21,8 @@ const useStyles = makeStyles({
     height: "100%",
     display: "flex",
     flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   Container: {
     display: "flex",
@@ -50,53 +55,46 @@ const useStyles = makeStyles({
     height: "100%",
     borderRadius: "12px 0px 0px 12px",
   },
+  text: {
+    color: "#F6F6F6",
+    fontFamily: "Ubuntu, sans-serif",
+    fontSize: "42px",
+    fontStyle: "normal",
+    fontWeight: 700,
+    lineHeight: "normal",
+    textAlign: "left",
+    margin: "146px 0 0 58px",
+    width: "356px",
+  },
+  logo: {
+    maxWidth: "100%",
+    maxHeight: "100px",
+    marginTop: "5px",
+    backgroundColor: "#070911",
+    borderRadius: "50%",
+  },
 });
-
-const getBackgroundAndText = (path) => {
-  switch (path) {
-    case "/auth/register/step1":
-      return {
-        backgroundImage: `url(${Step1Background})`,
-        text: "Das Digitale Büro für Die Generation Z.",
-      };
-    case "/auth/register/step2":
-      return {
-        backgroundImage: `url(${Step2Background})`,
-        text: "Der Sichere Ort für alle Wichtigen Daten.",
-      };
-    case "/auth/register/step3":
-      return {
-        backgroundImage: `url(${Step3Background})`,
-        text: "Die Projektverwaltung Made in Germany.",
-      };
-    case "/auth/login":
-      return {
-        backgroundImage: `url(${LoginBackground})`,
-        text: "Deine Projektverwaltung Einfach gemacht.",
-      };
-    default:
-      return {
-        backgroundImage: `url(${LoginBackground})`,
-        text: "Deine Projektverwaltung Einfach gemacht.",
-      };
-  }
-};
 
 function AuthLayout() {
   const classes = useStyles();
   let location = useLocation();
-  // console.log("Current Path: ", location.pathname);
-  const { backgroundImage, text } = getBackgroundAndText(location.pathname);
+  const { t } = useTranslation();
+  const { backgroundImage, text } = getBackgroundAndText(location.pathname, t);
 
   return (
     <Box className={classes.root}>
       <Box className={classes.Container}>
         <Box className={classes.left} style={{ backgroundImage }}>
           <Box className={classes.gradientOverlay}>
-            <Typography variant="h4" color="inherit">
-              LOGO
+            <Box
+              component="img"
+              src={ReAlignLogo}
+              alt="ReAlign Logo"
+              className={classes.logo}
+            />
+            <Typography variant="h1" className={classes.text}>
+              {text}
             </Typography>
-            <Typography variant="h1">{text}</Typography>
           </Box>
         </Box>
         <Box className={classes.right}>
@@ -111,5 +109,35 @@ function AuthLayout() {
     </Box>
   );
 }
+
+const getBackgroundAndText = (path, t) => {
+  switch (path) {
+    case "/auth/register/step1":
+      return {
+        backgroundImage: `url(${Step1Background})`,
+        text: t("Layout.Auth.step1Text"),
+      };
+    case "/auth/register/step2":
+      return {
+        backgroundImage: `url(${Step2Background})`,
+        text: t("Layout.Auth.step2Text"),
+      };
+    case "/auth/register/step3":
+      return {
+        backgroundImage: `url(${Step3Background})`,
+        text: t("Layout.Auth.step3Text"),
+      };
+    case "/auth/login":
+      return {
+        backgroundImage: `url(${LoginBackground})`,
+        text: t("Layout.Auth.loginText"),
+      };
+    default:
+      return {
+        backgroundImage: `url(${LoginBackground})`,
+        text: t("Layout.Auth.loginText"),
+      };
+  }
+};
 
 export default memo(AuthLayout);

@@ -1,1 +1,10 @@
-{}
+{
+  "Layout": {
+    "Auth": {
+      "loginText": "Deine Projektverwaltung Einfach gemacht.",
+      "step1Text": "Das Digitale Büro für Die Generation Z.",
+      "step2Text": "Der Sichere Ort für alle Wichtigen Daten.",
+      "step3Text": "Die Projektverwaltung Made in Germany."
+    }
+  }
+}
