@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, Suspense } from "react";
 import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 import PrivateRoutes from "PrivateRoutes";
 
 const ErrorLayout = React.lazy(() => import("./layouts/ErrorLayout"));
@@ -29,7 +30,7 @@ const AppRoutes = (props) => {
 
   allowedRoutes = (
     <Fragment>
-      <Suspense fallback={<div>Laden...</div>}>
+      <Suspense fallback={<CircularProgress />}>
         <Routes>
           {isDev && <Route path="/storybook" element={<StorybookRoute />} />}
 

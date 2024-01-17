@@ -1,7 +1,7 @@
 import React, { Suspense, memo } from "react";
 import { Route, Routes } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, CircularProgress } from "@mui/material";
 
 const useStyles = makeStyles({
   root: {
@@ -18,7 +18,7 @@ function ErrorLayout() {
   return (
     <Box className={classes.root}>
       <Typography variant="h1">ErrorLayout</Typography>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<CircularProgress />}>
         <Routes>
           <Route path="/404" element={<div>404</div>} />
           <Route path="/401" element={<div>401</div>} />
