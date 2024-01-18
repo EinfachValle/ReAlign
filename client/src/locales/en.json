@@ -6,5 +6,16 @@
       "step2Text": "The Safe Place for all Important Data.",
       "step3Text": "Project Management Made in Germany."
     }
+  },
+  "Auth": {
+    "Login": {
+      "signIn": "Sign In",
+      "signInForFunction": "Please log in to use all functions of ReAlign.",
+      "yourUsername": "Your Username",
+      "yourPassword": "Your Password",
+      "rememberPassword": "Remember Password",
+      "forgotPassword": "Forgot Password?",
+      "askForRegister": "No account yet? Register here for free."
+    }
   }
 }
