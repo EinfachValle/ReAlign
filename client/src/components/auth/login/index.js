@@ -15,6 +15,8 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+import CustomInput from "components/atoms/inputs/CustomInput";
+import PasswordInput from "components/atoms/inputs/PasswordInput";
 
 const useStyles = makeStyles({
   root: {
@@ -63,24 +65,6 @@ const useStyles = makeStyles({
     fontWeight: 700,
     lineHeight: "normal",
     marginBottom: "5px",
-  },
-  input: {
-    width: "400px",
-    height: "50px",
-    flexShrink: 0,
-    borderRadius: "4px",
-    border: "2px solid #EC4E49",
-    background: "#191919",
-    padding: "15px 20px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    fontFamily: "Montserrat, sans-serif",
-    fontSize: "16px",
-    fontStyle: "normal",
-    fontWeight: 400,
-    lineHeight: "normal",
-    color: "#FFsF",
   },
   loginOrCreateAcc: {
     display: "inline-flex",
@@ -168,26 +152,21 @@ const Login = () => {
           <label htmlFor="email" className={classes.label}>
             {t("Auth.Login.yourUsername")}
           </label>
-          <input
-            type="email"
-            placeholder="max.mustermann@muster.com"
-            name="email"
+          <CustomInput
+            type={email}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={classes.input}
+            placeholder="re.align@user.com"
           />
         </FormGroup>
         <FormGroup className={classes.formGroup}>
           <label htmlFor="password" className={classes.label}>
             {t("Auth.Login.yourPassword")}
           </label>
-          <input
-            type="password"
-            placeholder="*******************************************"
-            name="password"
+          <PasswordInput
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className={classes.input}
+            showEyeIcon={true}
           />
           <Box className={classes.passwordOptions}>
             <FormControlLabel
