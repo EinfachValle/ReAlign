@@ -1,20 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  Box,
-  Button,
-  Typography,
-  FormGroup,
-  FormControlLabel,
-  CircularProgress,
-  Checkbox,
-} from "@mui/material";
+import { Link } from "react-router-dom";
+import { Box, Button, Typography, FormGroup } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import CustomInput from "components/atoms/inputs/CustomInput";
-import PasswordInput from "components/atoms/inputs/PasswordInput";
 
 const useStyles = makeStyles({
   root: {
@@ -105,32 +95,69 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "flex-start",
     justifyContent: "space-between",
-    // gap: "5px",
-    // flexShrink: 0,
   },
 });
 
-const StepOne = () => {
+const calculateAge = (birthday) => {
+  const birthDate = new Date(birthday);
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  return age;
+};
+
+const StepOne = ({ onNext }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [email, setEmail] = useState("");
 
-  const handleSubmit = () => {};
+  const isValidEmail = (email) => {
+    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const handleSubmit = () => {
+    if (!firstName || !lastName || !email || !birthday || !username) {
+      toast.error(t("Auth.Register.Step1.emptyFieldsError"));
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      toast.error(t("Auth.Register.Step1.invalidEmailError"));
+      return;
+    }
+
+    const age = calculateAge(birthday);
+    if (age < 18) {
+      toast.error(t("Auth.Register.Step1.under18Error"));
+      return;
+    }
+
+    onNext({ firstName, lastName, birthday, email, username });
+  };
 
   return (
     <Box className={classes.root}>
       <Box className={classes.textBox}>
         <Typography variant="h1" className={classes.text1}>
-          Wer bist du?
+          {t("Auth.Register.Step1.whoAreYou")}
         </Typography>
         <Box className={classes.textBox2}>
           <Typography variant="h4" className={classes.text2}>
-            Willkommen bei ReAlign.
+            {t("Auth.Register.Step1.Welcome")}
           </Typography>
           <Typography variant="h4" className={classes.text2}>
-            Beginnen wir mit den Basics.
+            {t("Auth.Register.Step1.letsStart")}
           </Typography>
         </Box>
       </Box>
@@ -138,81 +165,90 @@ const StepOne = () => {
         <Box className={classes.firstLine}>
           <FormGroup className={classes.formGroup}>
             <label className={classes.label} htmlFor="firstName">
-              Dein Vorname
+              {t("Auth.Register.Step1.yourFirstName")}
             </label>
             <CustomInput
               type="text"
               placeholder="John"
               style={{ width: "200px", height: "50px", flexShrink: 0 }}
-              // value={firstName}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
             />
           </FormGroup>
           <FormGroup className={classes.formGroup}>
             <label className={classes.label} htmlFor="lastName">
-              Dein Nachname
+              {t("Auth.Register.Step1.yourLastName")}
             </label>
             <CustomInput
               type="text"
               placeholder="Doe"
               style={{ width: "200px", height: "50px", flexShrink: 0 }}
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
             />
           </FormGroup>
         </Box>
         <Box className={classes.secondLine}>
           <FormGroup className={classes.formGroup}>
             <label className={classes.label} htmlFor="email">
-              Deine E-Mail Adresse
+              {t("Auth.Register.Step1.yourEmail")}
             </label>
             <CustomInput
+              required
               fullWidth
               type="email"
               placeholder="re.align@user.com"
               style={{ width: "440px", height: "50px" }}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </FormGroup>
         </Box>
         <Box className={classes.thirdLine}>
           <FormGroup className={classes.formGroup}>
             <label className={classes.label} htmlFor="email">
-              Dein Geburtstag
+              {t("Auth.Register.Step1.yourUsername")}
             </label>
-            <Box
-              style={{ display: "flex", justifyContent: "center", gap: "10px" }}
-            >
-              <CustomInput
-                type="text"
-                placeholder="01"
-                style={{ width: "50px", height: "50px", flexShrink: 0 }}
-                inputProps={{ maxLength: 2 }}
-              />
-              <CustomInput
-                type="text"
-                placeholder="12"
-                style={{ width: "50px", height: "50px", flexShrink: 0 }}
-                inputProps={{ maxLength: 2 }}
-              />
-              <CustomInput
-                type="text"
-                placeholder="2003"
-                style={{ width: "64px", height: "50px", flexShrink: 0 }}
-                inputProps={{ maxLength: 4 }}
-              />
-            </Box>
+            <CustomInput
+              fullWidth
+              id="username"
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              style={{ width: "200px", height: "50px", flexShrink: 0 }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </FormGroup>
+          <FormGroup className={classes.formGroup}>
+            <label className={classes.label} htmlFor="email">
+              {t("Auth.Register.Step1.yourBirthday")}
+            </label>
+            <CustomInput
+              fullWidth
+              id="date"
+              type="date"
+              value={birthday}
+              onChange={(e) => setBirthday(e.target.value)}
+              style={{ width: "200px", height: "50px", flexShrink: 0 }}
+            />
           </FormGroup>
         </Box>
       </Box>
       <Box className={classes.loginOrCreateAcc}>
         <Button
           variant="primary"
-          type="submit"
-          // onSubmit={handleSubmit}
+          type="button"
+          onClick={handleSubmit}
           className={classes.Button}
         >
-          Fortfahren
+          {t("Auth.Register.Step1.proceed")}
         </Button>
         <Typography variant="body1" className={classes.text3}>
           <Link to="/auth/login" className={classes.text3}>
-            Du hast schon ein Konto? Log dich hier ein.
+            {t("Auth.Register.Step1.askForLogin")}
           </Link>
         </Typography>
       </Box>

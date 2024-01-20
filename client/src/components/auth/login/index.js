@@ -191,8 +191,8 @@ const Login = () => {
         <Button
           disabled={isLoading}
           variant="primary"
-          type="submit"
-          onSubmit={handleSubmit}
+          type="button"
+          onClick={handleSubmit}
           className={classes.Button}
         >
           {t("Auth.Login.signIn")}

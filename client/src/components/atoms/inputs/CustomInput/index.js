@@ -25,6 +25,9 @@ const useStyles = makeStyles({
         border: "none",
       },
     },
+    "& .MuiInputAdornment-root .MuiSvgIcon-root": {
+      color: "#FFF",
+    },
   },
 });
 
@@ -59,6 +62,9 @@ const CustomInput = ({
           "& fieldset": {
             border: "none",
           },
+        },
+        "& .MuiInputAdornment-root .MuiSvgIcon-root": {
+          color: "white", // Farbe auf Weiß setzen
         },
       }}
       required

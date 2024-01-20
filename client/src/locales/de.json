@@ -16,6 +16,25 @@
       "rememberPassword": "Passwort merken",
       "forgotPassword": "Passwort vergessen?",
       "askForRegister": "Noch kein Konto? Registriere dich hier kostenlos."
+    },
+    "Register": {
+      "Step1": {
+        "whoAreYou": "Wer bist du? 👋",
+        "Welcome": "Willkommen bei ReAlign.",
+        "letsStart": "Beginnen wir mit den Basics.",
+        "yourFirstName": "Dein Vorname",
+        "yourLastName": "Dein Nachname",
+        "yourEmail": "Deine E-Mail Adresse",
+        "yourBirthday": "Dein Geburtstag",
+        "yourUsername": "Dein Benutzername",
+        "proceed": "Fortfahren",
+        "askForLogin": "Du hast schon ein Konto? Hier kannst du dich einloggen.",
+        "emptyFieldsError": "Bitte füllen Sie alle Felder aus.",
+        "invalidEmailError": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+        "under18Error": "Sie müssen mindestens 18 Jahre alt sein."
+      },
+      "Step2": {},
+      "Step3": {}
     }
   }
 }

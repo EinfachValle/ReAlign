@@ -38,6 +38,14 @@ const User = new mongoose.Schema(
       required: true,
       select: false,
     },
+    birthday: {
+      type: Date,
+      required: true,
+    },
+    userAgreement: {
+      type: Boolean,
+      required: true,
+    },
     role: {
       type: String,
       enum: ["admin", "member"],
