@@ -4,8 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   root: {
-    width: "400px",
-    height: "50px",
     flexShrink: 0,
     borderRadius: "4px",
     border: "2px solid #EC4E49",
@@ -36,13 +34,16 @@ const CustomInput = ({
   onChange,
   label,
   placeholder,
+  fullWidth,
+  style,
   ...otherProps
 }) => {
   const classes = useStyles();
 
   return (
     <TextField
-      fullWidth
+      style={style}
+      fullWidth={fullWidth}
       type={type}
       value={value}
       onChange={onChange}

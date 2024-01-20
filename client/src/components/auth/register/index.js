@@ -1,7 +1,7 @@
 import React, { Suspense, useState } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
@@ -36,9 +36,7 @@ const Register = () => {
 
   return (
     <Box className={classes.root}>
-      <Typography variant="h1">Register</Typography>
-
-      <Suspense fallback={<Box>Loading...</Box>}>
+      <Suspense fallback={<CircularProgress />}>
         <Routes>
           <Route path="/step1" element={<StepOne onNext={goToNextStep} />} />
           <Route

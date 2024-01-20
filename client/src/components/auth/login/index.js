@@ -153,7 +153,9 @@ const Login = () => {
             {t("Auth.Login.yourUsername")}
           </label>
           <CustomInput
-            type={email}
+            fullWidth
+            style={{ width: "400px", height: "50px" }}
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="re.align@user.com"

@@ -78,7 +78,7 @@ const PasswordInput = ({ showCubeIcon, showEyeIcon, value, onChange }) => {
       type={showPassword ? "text" : "password"}
       fullWidth
       required
-      placeholder="************************"
+      placeholder="*******************"
       name="password"
       value={value}
       onChange={onChange}
