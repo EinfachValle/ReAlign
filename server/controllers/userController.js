@@ -20,7 +20,7 @@ const authUser = asyncHandler(async (req, res) => {
 });
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { userName, firstName, lastName, email, password } = req.body;
+  const { userName, firstName, lastName, email, password, birthday } = req.body;
 
   const userExist = await User.findOne({ email });
 
@@ -34,6 +34,7 @@ const registerUser = asyncHandler(async (req, res) => {
     lastName,
     email,
     password,
+    birthday,
   });
 
   if (user) {
@@ -44,6 +45,7 @@ const registerUser = asyncHandler(async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      birthday: user.birthday,
       role: user.role,
     });
   } else {
